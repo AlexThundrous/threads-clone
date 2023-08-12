@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  /* Adjust positioning and styles for the Signin component as needed */
+  .signin-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Higher z-index to overlap the particles background */
+  }
+  
+  
