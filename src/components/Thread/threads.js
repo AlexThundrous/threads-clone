@@ -113,6 +113,7 @@ class Threads extends Component {
             <ThreadCard
               key={thread.id}
               id = {thread.id}
+              index={index}
               username={username}
               content={thread.content}
               likes={likes[index]} // Use likes from state
@@ -120,6 +121,9 @@ class Threads extends Component {
               replies={thread.replies}
               onLikeClick={() => this.handleLikeClick(index)}
               deletethread={() => this.openConfirmationModal(thread.id)}
+              loadUser = {this.props.loadUser}
+              googleId = {this.props.googleId}
+              threads = {threads}
             />
           ))}
         </Box>

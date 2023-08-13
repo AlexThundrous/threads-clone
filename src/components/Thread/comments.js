@@ -43,32 +43,36 @@ class Comments extends Component {
 
   deletethread = async (replyId) => {
     try {
-        const response = await fetch(`http://localhost:3001/thread/${this.props.username}/${this.props.threadId}/${replyId}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          if (response.ok) {
-            window.location.reload();
-          } else {
-            // Handle error
-            console.error('Error deleting thread:', response.statusText);
-          }
+      const response = await fetch(`http://localhost:3001/thread/${this.props.username}/${this.props.threadId}/${replyId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        // Handle error
+        console.error('Error deleting thread:', response.statusText);
+      }
     } catch (error) {
       console.error('Error deleting reply:', error);
     }
   };
 
   render() {
-    const { replies, username } = this.props;
+    const { thread } = this.props;
     const { isDarkMode } = this.state;
     const bgColor = isDarkMode ? 'black' : 'white'; // Background color based on mode
     const textColor = isDarkMode ? 'white' : 'black';
+    // Check if there are no thread available
+    if (!thread) {
+      // Handle case when thread is undefined
+      return <div>Loading...</div>;
+    }
 
-    // Check if there are no replies available
-    if (!replies || replies.length === 0) {
+    if (!thread.replies || thread.replies.length === 0) {
       return (
         <Box
           p="4"
@@ -80,24 +84,30 @@ class Comments extends Component {
           display="flex"
         >
           <Center flex="1">
-            <Text> No replies available </Text>
+            <Text> No thread available </Text>
           </Center>
         </Box>
       );
     }
 
+    const commentCards = [];
+    for (let i = 0; i < thread.replies.length; i++) {
+      const reply = thread.replies[i];
+      commentCards.push(
+        <CommentCard
+          key={reply.id}
+          content={reply.content}
+          isDarkMode={isDarkMode}
+          deletethread={() => this.openConfirmationModal(reply.id)}
+        />
+      );
+    }
+
+
     return (
       <ChakraProvider theme={theme}>
         <Box width={{ base: '100%', md: '40%' }} mx="auto">
-          {replies.map((reply) => (
-            <CommentCard
-              key={reply.id}
-              username={username}
-              content={reply.content}
-              isDarkMode={isDarkMode}
-              deletethread={() => this.openConfirmationModal(reply.id)}
-            />
-          ))}
+          {commentCards}
         </Box>
         <Modal isOpen={this.state.showModal} onClose={this.closeConfirmationModal}>
           <ModalOverlay />

@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { Box, Button, Text, Icon} from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi';
 
-const CommentCard = ({ username, content, isDarkMode, deletethread, addNewComment }) => {
+const CommentCard = ({ content, isDarkMode, deletethread }) => {
 
   const bgColor = isDarkMode ? 'black' : 'white'; // Background color based on mode
   const textColor = isDarkMode ? 'white' : 'black';
@@ -26,7 +26,8 @@ const CommentCard = ({ username, content, isDarkMode, deletethread, addNewCommen
         justifyContent="space-between"
         width="100%"
       >
-        <Text fontWeight="bold">{username}</Text>
+         <ReactMarkdown>{content}</ReactMarkdown>
+         &nbsp; &nbsp; &nbsp;
         <Button
           size="lg"
           leftIcon={<Icon as={FiTrash2} />}
@@ -36,7 +37,6 @@ const CommentCard = ({ username, content, isDarkMode, deletethread, addNewCommen
           onClick={deletethread}
         />
       </Box>
-      <ReactMarkdown>{content}</ReactMarkdown>
     </Box>
   );
 };

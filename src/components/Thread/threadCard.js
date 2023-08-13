@@ -5,7 +5,7 @@ import { FiTrash2, FiHeart } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import CommentPost from './commentpost'; // Import the Comments component
 
-const ThreadCard = ({ username, content, likes, onLikeClick, isDarkMode, deletethread, replies, id }) => {
+const ThreadCard = ({ username, content, likes, onLikeClick, isDarkMode, deletethread, replies, id, loadUser, googleId, threads, index }) => {
   const bgColor = isDarkMode ? 'black' : 'white'; // Background color based on mode
   const textColor = isDarkMode ? 'white' : 'black';
 
@@ -72,6 +72,10 @@ const ThreadCard = ({ username, content, likes, onLikeClick, isDarkMode, deletet
           username={username}
           threadId = {id}
           isDarkMode={isDarkMode}
+          loadUser = {loadUser}
+          googleId = {googleId}
+          threads = {threads}
+          index = {index}
         />
       </Collapse>
     </Box>

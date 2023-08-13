@@ -121,7 +121,7 @@ class Post extends Component {
     return (
       <Box position="relative">
         <Flex direction="column" alignItems="center">
-        <Threads isDarkMode={this.props.isDarkMode} threads={this.props.threads} username={this.props.username} googleId={this.props.id}/>
+        <Threads isDarkMode={this.props.isDarkMode} threads={this.props.threads} username={this.props.username} googleId={this.props.id} loadUser={this.props.loadUser}/>
           <Spacer /> {/* Add spacer to push Post button to the right */}
           <Button
             colorScheme={modalBgColor}// Set your preferred color here

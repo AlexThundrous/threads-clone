@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import {
   Box,
@@ -79,17 +79,15 @@ class CommentsPost extends Component {
 
       const response = await axios.post('http://localhost:3001/reply', {
         content: fullContent,
-        googleId: this.props.id,
+        googleId: this.props.googleId,
         threadId: this.props.threadId,
       });
-
       const user = response.data.user;
-
       // Assuming you have a method to update the threads array in your parent component
       // Update the threads array in your parent component with the new post
       this.props.loadUser(user);
       this.setState({ content: '', image: null, isModalOpen: false });
-      window.location.reload();
+      //  window.location.reload();
     } catch (error) {
       console.error(error);
       // Handle error here if necessary
@@ -118,11 +116,10 @@ class CommentsPost extends Component {
     const { content, image, isModalOpen, isEmojiPickerOpen } = this.state;
     const modalBgColor = this.props.isDarkMode ? 'black' : 'white'; // Adjust background color based on color mode
     const modalTextColor = this.props.isDarkMode ? 'white' : 'gray.900';
-
     return (
       <Box position="relative">
         <Flex direction="column" alignItems="center">
-        <Comments isDarkMode={this.props.isDarkMode} threads={this.props.threads} username={this.props.username} />
+          <Comments isDarkMode={this.props.isDarkMode} thread={this.props.threads[this.props.index]} username={this.props.username} threadId={this.props.threadId} />
           <Spacer /> {/* Add spacer to push Post button to the right */}
           <Button
             colorScheme={modalBgColor}// Set your preferred color here
@@ -137,7 +134,7 @@ class CommentsPost extends Component {
             }} // Hover styles
             leftIcon={<FiPlus />} // Add plus icon on the left
           >
-            New Thread
+            New reply
           </Button>
         </Flex>
 
